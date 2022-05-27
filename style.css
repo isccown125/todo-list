@@ -126,7 +126,7 @@ article ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:20px;
+    gap: 20%;
 }
 .delete-task-btn::before{
     content: "X";

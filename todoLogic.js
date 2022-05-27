@@ -2,17 +2,17 @@ const btnAddTask = document.querySelector("#add-task-btn")
 const taskList = document.querySelector(".task-list")
 const inputDescription = document.getElementById("description")
 const checkDoneTask = document.querySelectorAll(".check-task-style")
-const deleteTaskBtn = document.querySelectorAll(".delete-task-btn")
+
 
 let allertIsActive = false;
 const arrTask = []
 
-const allertHandler = (desc, bgcolor = "hsl(0, 60%, 40%)") => {
+const webAlert = (desc, bgcolor = "hsl(0, 60%, 40%)") => {
     const allert = document.createElement("div");
     allert.className = "allert";
     allert.textContent = `${desc}`;
     allert.style.background = `${bgcolor}`
-    allert.style.fontWeight =  "bold"
+    allert.style.fontWeight = "bold"
     allert.style.display = "flex";
     if (allertIsActive === false) {
         document.body.append(allert)
@@ -43,7 +43,7 @@ const allertHandler = (desc, bgcolor = "hsl(0, 60%, 40%)") => {
 class TaskValues {
     constructor() {
         this.description = this.getDescriptionInput() || "";
-    }       
+    }
     getDescriptionInput() {
         this.description = document.querySelector("#description")
             .addEventListener("change", (e) => {
@@ -66,11 +66,11 @@ class CreateTask {
         this.taskDescWrapper = document.createElement("div")
         this.taskDescWrapper.className = "title"
         this.actionWrapper = document.createElement("div")
-        this.actionWrapper.classList =  "action-task-wrapper"
+        this.actionWrapper.classList = "action-task-wrapper"
 
         this.taskDescription = document.createElement("h1")
         this.taskDescription.textContent = this.description;
-        
+
         this.checkTask = document.createElement("input")
         this.checkTask.type = "checkbox"
         this.checkTask.className = "check-task-style"
@@ -92,12 +92,25 @@ class CreateTask {
 
 const DataTask = new TaskValues();
 
-btnAddTask.addEventListener("click", (e) => {
+const deleteTask = (e) => {
+    const tasks = [...document.querySelectorAll(".task-list__item")]
+    tasks.forEach((element, index) => {
+        element.addEventListener("click", (event) => {
+            console.log(event.target)
+            if (event.target.tagName === "BUTTON") {
+                taskList.removeChild(element);
+            } else {
+                return
+            }
+
+        })
+    });
+}
+
+const allertErrorHandler = (e) => {
     e.preventDefault();
-
-
     if (DataTask.description.length <= 0) {
-        return allertHandler("Nie podałeś treści zadania!");;
+        return webAlert("Nie podałeś treści zadania!");;
     } else {
         const task = new CreateTask(DataTask.description);
         console.log(DataTask.description)
@@ -105,7 +118,19 @@ btnAddTask.addEventListener("click", (e) => {
         DataTask.description = "";
         inputDescription.value = "";
     }
-})
+    deleteTask()
+}
 
 
 
+
+
+
+
+
+
+
+
+
+
+btnAddTask.addEventListener("click", allertErrorHandler)
