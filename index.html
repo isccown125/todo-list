@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO list</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+        <header>
+            <form class="add-task-form">
+                <label for="#title" class="input-container">
+                    <strong>Treść</strong> <br>
+                    <input type="text" id="description" class="input-text">
+                </label>
+                <div class="btn-container">
+                    <button id="add-task-btn" class="btn add-task-form__btn">Dodaj zadanie</button>
+                </div>
+            </form>
+        </header>
+        <article>
+            <div class="_content-list">
+                <ul class="task-list">
+                </ul>
+            </div>
+        </article>
+    </div>
+
+    <script src="todoLogic.js"></script>
+</body>
+
+</html>
