@@ -3,9 +3,7 @@ const taskList = document.querySelector(".task-list")
 const inputDescription = document.getElementById("description")
 const checkDoneTask = document.querySelectorAll(".check-task-style")
 
-
 let allertIsActive = false;
-const arrTask = []
 
 const webAlert = (desc, bgcolor = "hsl(0, 60%, 40%)") => {
     const allert = document.createElement("div");
@@ -22,7 +20,6 @@ const webAlert = (desc, bgcolor = "hsl(0, 60%, 40%)") => {
             const alertInter = setInterval(() => {
                 if (i >= 0) {
                     allert.style.opacity = `${i -= 0.01}`
-                    console.log("cos")
                 }
             }, 7)
 
@@ -74,6 +71,7 @@ class CreateTask {
         this.checkTask = document.createElement("input")
         this.checkTask.type = "checkbox"
         this.checkTask.className = "check-task-style"
+        this.checkTask.classList.add("check-task")
 
         this.deleteTaskBtn = document.createElement("button");
         this.deleteTaskBtn.classList = "delete-task-btn";
@@ -84,8 +82,6 @@ class CreateTask {
         this.taskDescWrapper.append(this.taskDescription)
         this.actionWrapper.append(this.checkTask)
         this.actionWrapper.append(this.deleteTaskBtn)
-
-        arrTask.push(this.taskListItem);
         return this.taskListItem;
     }
 }
@@ -96,28 +92,44 @@ const deleteTask = (e) => {
     const tasks = [...document.querySelectorAll(".task-list__item")]
     tasks.forEach((element, index) => {
         element.addEventListener("click", (event) => {
-            console.log(event.target)
-            if (event.target.tagName === "BUTTON") {
-                taskList.removeChild(element);
+            if (event.target.tagName === "BUTTON" && tasks[index] === element) {
+                const taskList = document.querySelector(".task-list");
+                taskList.removeChild(tasks[index])
             } else {
                 return
             }
-
         })
     });
 }
 
-const allertErrorHandler = (e) => {
+const checkOfTheTask = ()=>{
+    const tasks = [...document.querySelectorAll(".task-list__item")]
+    tasks.forEach((element)=>{
+        element.addEventListener("change", (event)=>{
+            const checkboxTask = element.querySelector(".check-task")
+            if(checkboxTask.checked === true){
+                element.classList.add("checked")
+            }else{
+                element.classList.remove("checked")
+            }
+
+        })
+    
+    })
+}
+
+
+const addTaskHandler = (e) => {
     e.preventDefault();
     if (DataTask.description.length <= 0) {
         return webAlert("Nie podałeś treści zadania!");;
     } else {
         const task = new CreateTask(DataTask.description);
-        console.log(DataTask.description)
         taskList.append(task.create());
         DataTask.description = "";
         inputDescription.value = "";
     }
+    checkOfTheTask()
     deleteTask()
 }
 
@@ -126,11 +138,4 @@ const allertErrorHandler = (e) => {
 
 
 
-
-
-
-
-
-
-
-btnAddTask.addEventListener("click", allertErrorHandler)
+btnAddTask.addEventListener("click", addTaskHandler)

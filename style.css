@@ -115,6 +115,9 @@ article ul {
     align-items: center;
     align-content: center;
 }
+.checked{
+    background-color: green;
+}
 .task-list__item>.title{
     width: 80%;
     display: flex;
