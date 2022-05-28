@@ -89,11 +89,11 @@ class CreateTask {
 const DataTask = new TaskValues();
 
 const deleteTask = (e) => {
+    const taskList = document.querySelector(".task-list")
     const tasks = [...document.querySelectorAll(".task-list__item")]
     tasks.forEach((element, index) => {
         element.addEventListener("click", (event) => {
             if (event.target.tagName === "BUTTON" && tasks[index] === element) {
-                const taskList = document.querySelector(".task-list");
                 taskList.removeChild(tasks[index])
             } else {
                 return
